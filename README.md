@@ -1,5 +1,5 @@
 # create-prop-types
-A lightweight helper library to create custom React prop types validators for your applications.
+A lightweight helper library to create custom React prop types.
 
 ## Getting started
 ### Install
@@ -7,15 +7,11 @@ A lightweight helper library to create custom React prop types validators for yo
 npm install create-prop-types --save-dev
 ```
 
-### Import
-```js
-import createPropType from 'create-prop-types';
-```
-
 ### Create a custom prop type
 ```js
 // ./prop-types/Iterable.js
 
+import createPropType from 'create-prop-types';
 import { Iterable } from 'immutable';
 
 const IterablePropType = createPropType({
@@ -36,3 +32,45 @@ export default class MyComponent extends React.Component {
   }
 }
 ```
+
+## API
+### `predicate: (propValue: any) => boolean`
+A predicate function to satisfy in order to consider the prop value as valid.
+
+#### Example
+```js
+const CustomPropType = createPropType({
+  predicate: propValue => (propValue !== 'foo')
+});
+
+export default CustomPropType;
+```
+
+### `warnings?: Warnings`
+Optional custom warning messages.
+
+```ts
+type Warnings = {
+  missing?: WarningResolver,
+  invalid?: WarningResolver
+}
+
+type WarningResolver = (propName: string, propValue: any, componentName: string) => string
+```
+
+#### Example
+```js
+const CustomPropType = createPropType({
+  predicate: propValue => ...,
+  warnings: {
+    missing: (propName, propValue, componentName) => {
+      return `Required prop "${propName}" is missing in "${componentName}" component.`;
+    }
+  }
+});
+
+export default CustomPropType;
+```
+
+## License
+This project is licensed under [MIT License](./LICENSE.md). See the license file for more details.
