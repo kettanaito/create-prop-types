@@ -28,21 +28,22 @@ export default function createPropType(options: CreatorOptions) {
   invariant(predicate, 'Invalid "predicate" option supplied to custom prop type creator. ' +
     'Expected a function, but got: %s', predicate);
 
-  function createValidator(isRequired: boolean = false) {
+  function generateValidator(isRequired: boolean = false) {
     return function (props: Object, propName: string, componentName: string): void {
       const propValue = props[propName];
 
       if ((typeof propValue === 'undefined') || (propValue === null)) {
         invariant(!isRequired, warnings.missing(propName, propValue, componentName));
-        return null;
+        return;
       }
 
       invariant(predicate(propValue), warnings.invalid(propName, propValue, componentName));
+      return;
     };
   };
 
-  const propType: any = createValidator();
-  propType.isRequired = createValidator(true);
+  const propType: any = generateValidator();
+  propType.isRequired = generateValidator(true);
 
   return propType;
 }

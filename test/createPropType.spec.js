@@ -1,5 +1,5 @@
 import React from 'react';
-import { expect } from 'chai';
+import { assert, expect } from 'chai';
 import { mount } from 'enzyme';
 import { Map } from 'immutable';
 import createPropType from '../lib';
@@ -8,18 +8,17 @@ const MapPropType = createPropType({
   predicate: propValue => Map.isMap(propValue)
 });
 
-class MyComponent extends React.Component {
-  render() {
-    return null;
-  }
-}
-
-MyComponent.propTypes = {
-  propA: MapPropType,
-  propB: MapPropType.isRequired
-};
+const Element = () => null;
 
 describe('createPropType', function () {
+  function assertPasses(validator, { props }, propName) {
+    expect(validator(props, propName, '')).to.be.undefined;
+  }
+
+  function assertFails(validator, { props }, propName) {
+    expect(validator.bind(this, props, propName, '')).to.throw(Error);
+  }
+
   it('Returns valid prop type validator', () => {
     expect(MapPropType).to.be.an.instanceOf(Function);
     expect(MapPropType).to.have.property('isRequired');
@@ -27,24 +26,20 @@ describe('createPropType', function () {
   });
 
   it('Optional prop is validated properly', () => {
-    const missingProp = mount.bind(this, <MyComponent propB={Map()} />);
-    expect(missingProp).not.to.throw;
+    const validator = MapPropType;
+    Element.propTypes = { prop: validator };
 
-    const invalidProp = mount.bind(this, <MyComponent propA={{ a: true }} propB={Map()} />);
-    expect(invalidProp).to.throw;
-
-    const validProp = mount.bind(this, <MyComponent propA={Map()} propB={Map()} />);
-    expect(validProp).not.to.throw;
+    assertPasses(validator, <Element />, 'prop');
+    assertFails(validator, <Element prop={{ a: true }} />, 'prop');
+    assertPasses(validator, <Element prop={Map()} />, 'prop');
   });
 
   it('Required prop is validated correctly', () => {
-    const missingProp = mount.bind(this, <MyComponent />);
-    expect(missingProp).to.throw;
+    const validator = MapPropType.isRequired;
+    Element.propTypes = { prop: validator };
 
-    const invalidProp = mount.bind(this, <MyComponent propB={{ a: true }} />);
-    expect(invalidProp).to.throw;
-
-    const validProp = mount.bind(this, <MyComponent propB={Map()} />);
-    expect(validProp).not.to.throw;
+    assertFails(validator, <Element />, 'prop');
+    assertFails(validator, <Element prop={{ a: true }} />, 'prop');
+    assertPasses(validator, <Element prop={Map()} />, 'prop');
   });
 });
