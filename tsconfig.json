@@ -1,0 +1,17 @@
+{
+  "compileOnSave": true,
+  "compilerOptions": {
+    "target": "es6",
+    "module": "umd",
+    "moduleResolution": "node",
+    "lib": [
+      "es2015"
+    ]
+  },
+  "exclude": [
+    "node_modules"
+  ],
+  "files": [
+    "./source/**/*.ts"
+  ]
+}

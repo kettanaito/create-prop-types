@@ -1,0 +1,49 @@
+{
+  "name": "create-prop-types",
+  "version": "1.0.0",
+  "description": "Create custom React prop types with ease",
+  "main": "lib/index.js",
+  "source": "source/index.ts",
+  "scripts": {
+    "test": "test",
+    "build": "NODE_ENV=production webpack",
+    "prepublishOnly": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kettanaito/create-prop-types.git"
+  },
+  "keywords": [
+    "react",
+    "prop",
+    "prop",
+    "types",
+    "type",
+    "types",
+    "custom",
+    "prop",
+    "type",
+    "custom",
+    "type"
+  ],
+  "author": "Artem Zakharchenko",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kettanaito/create-prop-types/issues"
+  },
+  "homepage": "https://github.com/kettanaito/create-prop-types#readme",
+  "devDependencies": {
+    "awesome-typescript-loader": "^5.0.0-0",
+    "babel": "^6.23.0",
+    "babel-loader": "^7.1.4",
+    "babel-minify-webpack-plugin": "^0.3.0",
+    "babel-preset-env": "^1.6.1",
+    "tslint": "^5.9.1",
+    "typescript": "^2.7.2",
+    "webpack": "^4.1.0",
+    "webpack-cli": "^2.0.10"
+  },
+  "dependencies": {
+    "invariant": "^2.2.3"
+  }
+}
