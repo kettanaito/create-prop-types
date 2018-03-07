@@ -39,6 +39,8 @@ A predicate function to satisfy in order to consider the prop value as valid.
 
 #### Example
 ```js
+import createPropType from 'create-prop-types';
+
 const CustomPropType = createPropType({
   predicate: propValue => (propValue !== 'foo')
 });
@@ -60,6 +62,8 @@ type WarningResolver = (propName: string, propValue: any, componentName: string)
 
 #### Example
 ```js
+import createPropType from 'create-prop-types';
+
 const CustomPropType = createPropType({
   predicate: propValue => ...,
   warnings: {

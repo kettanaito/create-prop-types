@@ -25,7 +25,7 @@ module.exports = {
   },
   plugins: [
     PRODUCTION && new BabelMinifyPlugin({
-      // removeConsole: true,
+      removeConsole: true,
       mangle: {
         topLevel: true
       }
