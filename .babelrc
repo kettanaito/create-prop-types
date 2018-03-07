@@ -1,10 +1,4 @@
 {
-  "presets": [
-    ["env", {
-      "modules": false,
-      "targets": {
-        "browsers": "last 2 versions"
-      }
-    }]
-  ]
+  "presets": ["env", "react"],
+  "plugins": ["transform-object-rest-spread"]
 }

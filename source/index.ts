@@ -1,4 +1,3 @@
-import util from 'util';
 import invariant from 'invariant';
 
 type WarningResolver = (propName: string, propValue: any, componentName: string) => string
@@ -14,13 +13,9 @@ type CreatorOptions = {
 }
 
 const defaultWarnings: Warnings = {
-  missing: (propName, propValue, componentName) => util.format(
-    'Prop `%s` marked as required in `%s`, but its value is `%s`.',
-    propName, componentName, propValue),
+  missing: (propName, propValue, componentName) => `Prop \`${propName}\` marked as required in \`${componentName}\`, but its value is \`${propValue}\`.`,
 
-  invalid: (propName, propValue, componentName) => util.format(
-    'Invalid prop `%s` of type `%s` supplied to `%s`.',
-    propName, typeof propValue, componentName)
+  invalid: (propName, propValue, componentName) => `Invalid prop \`${propName}\` of type \`${typeof propValue}\` supplied to \`${componentName}\`.`
 };
 
 /**
@@ -37,9 +32,8 @@ export default function createPropType(options: CreatorOptions) {
     return function (props: Object, propName: string, componentName: string): void {
       const propValue = props[propName];
 
-      if ((typeof propValue !== 'undefined') && (propValue !== null)) {
+      if ((typeof propValue === 'undefined') || (propValue === null)) {
         invariant(!isRequired, warnings.missing(propName, propValue, componentName));
-
         return null;
       }
 
