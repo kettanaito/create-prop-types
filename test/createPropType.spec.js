@@ -1,6 +1,5 @@
 import React from 'react';
 import { assert, expect } from 'chai';
-import { mount } from 'enzyme';
 import { Map } from 'immutable';
 import createPropType from '../lib';
 
